@@ -1,0 +1,69 @@
+{
+  "name": "spotify-wrapper",
+  "version": "1.0.0",
+  "description": "Biblioteca do curso de JS com TDD na prática.",
+  "main": "lib/index.js",
+  "scripts": {
+    "clear:lib": "rimraf lib",
+    "clear:all": "rimraf lib && rimraf .nyc_output && rimraf coverage && rimraf dist",
+    "build": "npm run clear:all && ./node_modules/.bin/babel --out-dir lib src",
+    "build:watch": "npm run build -- --watch",
+    "build:umd": "./node_modules/.bin/webpack --output-filename spotify-wrapper.umd.js --mode=development",
+    "build:umd:min": "./node_modules/.bin/webpack --output-filename spotify-wrapper.umd.min.js -p",
+    "build:all": "npm run build && npm run build:umd && npm run build:umd:min",
+    "test": "./node_modules/.bin/mocha tests/**/*.spec.js --require @babel/register",
+    "test:nyan": "npm test -- --reporter=nyan --watch",
+    "test:tdd": "./node_modules/.bin/mocha tests/**/*.spec.js --require @babel/register --watch",
+    "test:coverage": "nyc npm test",
+    "coveralls": "npm run test:coverage && nyc report --reporter=text-lcov | coveralls",
+    "prepublish": "npm run build:all",
+    "dev": "webpack-dev-server"
+  },
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "nyc": {
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "exclude": [
+      "tests/**"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allonsmandy/spotify-wrapper.git"
+  },
+  "keywords": [
+    "js",
+    "tdd",
+    "library"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/allonsmandy/spotify-wrapper/issues"
+  },
+  "homepage": "https://github.com/allonsmandy/spotify-wrapper#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/node": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/register": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "chai": "^3.5.0",
+    "coveralls": "^3.1.0",
+    "husky": "^4.2.5",
+    "mocha": "^3.2.0",
+    "node-fetch": "^2.6.0",
+    "nyc": "^10.2.0",
+    "rimraf": "^3.0.2",
+    "sinon": "^9.0.2",
+    "sinon-chai": "^3.5.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
